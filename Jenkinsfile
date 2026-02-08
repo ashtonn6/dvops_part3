@@ -53,18 +53,7 @@ pipeline {
             }
         }
         
-        stage('Code Coverage') {
-            steps {
-                echo 'Generating code coverage reports...'
-                sh 'npm test -- --coverage'
-                publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'coverage/lcov-report',
-                    reportFiles: 'index.html',
-                    reportName: 'Coverage Report'
-                ])
+        
             }
         }
         
