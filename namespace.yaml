@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: blog-app-prod
+  labels:
+    name: blog-app-prod
+    environment: production
+    project: devops-part3
