@@ -61,10 +61,11 @@ pipeline {
         }
         
         stage('Build Docker Image') {
-            steps {
-                sh 'docker --version'  // Debug: verify docker works
-                sh 'docker build -t blog-post-app:${BUILD_NUMBER} .'
-            }
+    steps {
+        sh '/usr/local/bin/docker --version || /opt/homebrew/bin/docker --version'
+        sh '/usr/local/bin/docker build -t blog-post-app:${BUILD_NUMBER} . || /opt/homebrew/bin/docker build -t blog-post-app:${BUILD_NUMBER} .'
+    }
+}
         }
         
         stage('Deploy to Minikube') {
