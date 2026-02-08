@@ -62,9 +62,9 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                echo 'Building Docker image...'
+                sh 'which docker'  // Debug: show where docker is
+                sh 'docker --version'  // Debug: verify docker works
                 sh 'docker build -t blog-post-app:${BUILD_NUMBER} .'
-                sh 'docker tag blog-post-app:${BUILD_NUMBER} blog-post-app:latest'
             }
         }
         
