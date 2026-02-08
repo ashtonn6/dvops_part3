@@ -19,9 +19,12 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                echo 'Installing Node.js dependencies...'
-                sh 'npm install'
-                sh 'npx playwright install chromium'
+                script {
+                    echo 'Installing Node.js dependencies...'
+                    sh 'rm -rf node_modules'  // Clean old modules
+                    sh 'npm install'  // Install ALL dependencies (including devDependencies for testing)
+                    sh 'npx playwright install chromium'
+                }
             }
         }
         
@@ -79,8 +82,8 @@ pipeline {
         stage('Deploy to Minikube') {
             steps {
                 echo 'Deploying to Minikube...'
-                sh 'kubectl apply -f k8s/deployment.yaml'
-                sh 'kubectl apply -f k8s/service.yaml'
+                sh 'kubectl apply -f deployment.yaml'
+                sh 'kubectl apply -f service.yaml'
                 sh 'kubectl set image deployment/blog-post-app blog-post-app=blog-post-app:${BUILD_NUMBER}'
                 sh 'kubectl rollout status deployment/blog-post-app'
             }
@@ -109,4 +112,5 @@ pipeline {
             cleanWs()
         }
     }
+}
 }
