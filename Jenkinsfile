@@ -60,12 +60,23 @@ pipeline {
             }
         }
         
+        stage('Debug Docker Path') {
+            steps {
+                echo 'Finding Docker location...'
+                sh 'echo "Current PATH: $PATH"'
+                sh 'which docker || echo "docker not in PATH"'
+                sh 'ls -la /usr/local/bin/ | grep docker || echo "not in /usr/local/bin"'
+                sh 'ls -la /opt/homebrew/bin/ | grep docker || echo "not in /opt/homebrew/bin"'
+                sh 'ls -la /Applications/Docker.app/Contents/Resources/bin/ | grep docker || echo "not in Docker.app"'
+            }
+        }
+        
         stage('Build Docker Image') {
-    steps {
-        sh '/usr/local/bin/docker --version || /opt/homebrew/bin/docker --version'
-        sh '/usr/local/bin/docker build -t blog-post-app:${BUILD_NUMBER} . || /opt/homebrew/bin/docker build -t blog-post-app:${BUILD_NUMBER} .'
-    }
-}
+            steps {
+                echo 'Building Docker image...'
+                sh '/usr/local/bin/docker --version || /opt/homebrew/bin/docker --version'
+                sh '/usr/local/bin/docker build -t blog-post-app:${BUILD_NUMBER} . || /opt/homebrew/bin/docker build -t blog-post-app:${BUILD_NUMBER} .'
+            }
         }
         
         stage('Deploy to Minikube') {
@@ -91,5 +102,5 @@ pipeline {
             cleanWs()
         }
     }
-
+}
 
