@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "jest --coverage",
-    "test:unit": "jest tests/ashtonUtil.test.js --coverage",
-    "test:api": "jest tests/ashtonUtil.api.test.js --coverage",
+    "test:unit": "jest ashtonUtil.test.js --coverage",
+    "test:api": "jest ashtonUtil.api.test.js --coverage",
     "test:e2e": "playwright test",
     "test:all": "npm run test && npm run test:e2e",
     "start": "node server.js"
