@@ -72,17 +72,16 @@ pipeline {
         }
         
         stage('Build Docker Image') {
-           steps {
-               echo 'Building Docker image...'
-               sh '''
-               export DOCKER_CONFIG=/tmp/docker-config-$$
-               mkdir -p $DOCKER_CONFIG
-               echo '{"auths":{}}' > $DOCKER_CONFIG/config.json
-               /usr/local/bin/docker build -t blog-post-app:${BUILD_NUMBER} .
-              '''
+            steps {
+                echo 'Building Docker image...'
+                sh '''
+                    export DOCKER_CONFIG=/tmp/docker-config-$$
+                    mkdir -p $DOCKER_CONFIG
+                    echo '{"auths":{}}' > $DOCKER_CONFIG/config.json
+                    /usr/local/bin/docker build -t blog-post-app:${BUILD_NUMBER} .
+                '''
             }
         }
-    }
         
         stage('Deploy to Minikube') {
             steps {
@@ -107,5 +106,5 @@ pipeline {
             cleanWs()
         }
     }
-
+}
 
