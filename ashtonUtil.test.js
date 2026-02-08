@@ -1,5 +1,5 @@
 const { deleteBlogPost } = require('../utils/ashtonUtil');
-const fs = require('fs').promises;
+const fs = require('fs');
 const path = require('path');
 
 // Mock the fs module
