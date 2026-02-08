@@ -1,0 +1,37 @@
+{
+  "name": "blog-post-management",
+  "version": "1.0.0",
+  "description": "Blog post management system with CI/CD pipeline",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:unit": "jest __tests__/ashtonUtil.test.js --coverage",
+    "test:api": "jest __tests__/ashtonUtil.api.test.js --coverage",
+    "test:e2e": "playwright test",
+    "test:all": "npm run test && npm run test:e2e",
+    "start": "node server.js"
+  },
+  "keywords": ["blog", "nodejs", "express", "testing"],
+  "author": "Ong Pei Hao Ashton",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "utils/ashtonUtil.js"
+    ],
+    "coverageReporters": ["text", "lcov", "html"],
+    "testMatch": [
+      "**/__tests__/**/*.test.js",
+      "!**/__tests__/**/*.playwright.test.js"
+    ]
+  }
+}

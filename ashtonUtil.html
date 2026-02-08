@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        #postsContainer {
+            display: grid;
+            gap: 20px;
+        }
+
+        .post-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .post-title {
+            font-size: 1.5em;
+            color: #333;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .post-id {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .post-content {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .post-author {
+            font-weight: 500;
+        }
+
+        .post-date {
+            font-style: italic;
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(245, 87, 108, 0.3);
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(245, 87, 108, 0.4);
+        }
+
+        .delete-btn:active {
+            transform: translateY(0);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state svg {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .empty-state p {
+            font-size: 1.1em;
+        }
+
+        .stats {
+            background: #f8f9fa;
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stats-label {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stats-count {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Blog Post Manager</h1>
+            <p>Manage your blog posts with ease</p>
+        </div>
+        <div class="content">
+            <div class="stats">
+                <span class="stats-label">Total Posts:</span>
+                <span class="stats-count" id="postCount">0</span>
+            </div>
+            <div id="postsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // Sample blog posts data
+        let posts = [
+            {
+                id: 1,
+                title: "Getting Started with Node.js",
+                content: "Node.js is a powerful JavaScript runtime built on Chrome's V8 JavaScript engine. It allows developers to build scalable network applications.",
+                author: "John Doe",
+                createdAt: "2024-01-15"
+            },
+            {
+                id: 2,
+                title: "Understanding Express Middleware",
+                content: "Middleware functions are functions that have access to the request object, response object, and the next middleware function in the application's request-response cycle.",
+                author: "Jane Smith",
+                createdAt: "2024-01-20"
+            },
+            {
+                id: 3,
+                title: "Introduction to Testing with Jest",
+                content: "Jest is a delightful JavaScript testing framework with a focus on simplicity. It works with projects using Babel, TypeScript, Node.js, React, Angular, and Vue.",
+                author: "Bob Johnson",
+                createdAt: "2024-01-25"
+            }
+        ];
+
+        // Function to render posts
+        function renderPosts() {
+            const container = document.getElementById('postsContainer');
+            const countElement = document.getElementById('postCount');
+            
+            countElement.textContent = posts.length;
+
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                        </svg>
+                        <h2>No Posts Found</h2>
+                        <p>All blog posts have been deleted</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = posts.map(post => `
+                <div class="post-card" data-post-id="${post.id}">
+                    <div class="post-header">
+                        <h2 class="post-title">${post.title}</h2>
+                        <span class="post-id">ID: ${post.id}</span>
+                    </div>
+                    <p class="post-content">${post.content}</p>
+                    <div class="post-meta">
+                        <span class="post-author">👤 ${post.author}</span>
+                        <span class="post-date">📅 ${post.createdAt}</span>
+                    </div>
+                    <button class="delete-btn" onclick="deletePost(${post.id})">
+                        🗑️ Delete Post
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Function to delete a post
+        function deletePost(postId) {
+            // Confirm deletion
+            if (confirm(`Are you sure you want to delete post ID ${postId}?`)) {
+                // Find and remove the post
+                const initialLength = posts.length;
+                posts = posts.filter(post => post.id !== postId);
+                
+                if (posts.length < initialLength) {
+                    // Successfully deleted
+                    console.log(`Post ${postId} deleted successfully`);
+                    
+                    // Add fade out animation to the deleted card
+                    const card = document.querySelector(`[data-post-id="${postId}"]`);
+                    if (card) {
+                        card.style.animation = 'fadeOut 0.3s ease';
+                        setTimeout(() => {
+                            renderPosts();
+                        }, 300);
+                    } else {
+                        renderPosts();
+                    }
+                } else {
+                    alert(`Post with ID ${postId} not found`);
+                }
+            }
+        }
+
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initial render
+        renderPosts();
+    </script>
+</body>
+</html>

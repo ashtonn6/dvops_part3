@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Success</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .header .icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .info-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        .info-box h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .stats {
+            display: table;
+            width: 100%;
+            margin: 20px 0;
+        }
+        .stat-item {
+            display: table-row;
+        }
+        .stat-label, .stat-value {
+            display: table-cell;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .stat-label {
+            font-weight: 600;
+            color: #495057;
+            width: 40%;
+        }
+        .stat-value {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .checkmark {
+            color: #28a745;
+            margin-right: 8px;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+        .button:hover {
+            background-color: #218838;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            padding: 8px 0;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon">✅</div>
+            <h1>Build Successful!</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.9;">All tests passed and deployment completed</p>
+        </div>
+        
+        <div class="content">
+            <div class="info-box">
+                <h3>Build Information</h3>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-label">Project:</div>
+                        <div class="stat-value">${PROJECT_NAME}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Build Number:</div>
+                        <div class="stat-value">#${BUILD_NUMBER}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Duration:</div>
+                        <div class="stat-value">${BUILD_DURATION}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Timestamp:</div>
+                        <div class="stat-value">${BUILD_TIMESTAMP}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>Test Results</h3>
+                <ul>
+                    <li><span class="checkmark">✅</span> Backend Unit Tests: 5/5 Passed</li>
+                    <li><span class="checkmark">✅</span> API Integration Tests: 4/4 Passed</li>
+                    <li><span class="checkmark">✅</span> End-to-End Tests: 9/9 Passed</li>
+                    <li><span class="checkmark">✅</span> Code Coverage: 100%</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>Deployment Status</h3>
+                <ul>
+                    <li><span class="checkmark">✅</span> Docker Image Built Successfully</li>
+                    <li><span class="checkmark">✅</span> Deployed to Kubernetes Cluster</li>
+                    <li><span class="checkmark">✅</span> Health Checks Passing</li>
+                    <li><span class="checkmark">✅</span> Service Available</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="${BUILD_URL}" class="button">View Build Details</a>
+                <a href="${BUILD_URL}console" class="button" style="background-color: #6c757d;">View Console Output</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Jenkins CI/CD Pipeline</strong></p>
+            <p>Automated notification from Blog Post Management System</p>
+            <p>Generated at: ${BUILD_TIMESTAMP}</p>
+        </div>
+    </div>
+</body>
+</html>
