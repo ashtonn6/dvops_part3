@@ -62,7 +62,6 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                sh 'which docker'  // Debug: show where docker is
                 sh 'docker --version'  // Debug: verify docker works
                 sh 'docker build -t blog-post-app:${BUILD_NUMBER} .'
             }
