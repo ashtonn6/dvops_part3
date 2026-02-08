@@ -30,8 +30,8 @@
     ],
     "coverageReporters": ["text", "lcov", "html"],
     "testMatch": [
-      "**/__tests__/**/*.test.js",
-      "!**/__tests__/**/*.playwright.test.js"
+      "**/tests/**/*.test.js",
+      "!**/tests/**/*.playwright.test.js"
     ]
   }
 }
