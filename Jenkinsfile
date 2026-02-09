@@ -7,7 +7,7 @@ pipeline {
     
     environment {
         NODE_ENV = 'test'
-        EMAIL_RECIPIENTS = 'seileiein5@gmail.com'  
+        EMAIL_RECIPIENTS = 'ashtonn2@gmail.com'  
     }
     
     stages {
