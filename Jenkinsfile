@@ -3,8 +3,9 @@ pipeline {
     tools { nodejs 'NodeJS' }
     environment {
         NODE_ENV = 'test'
-        /* This tells Jenkins where to find YOUR minikube config */
-        MINIKUBE_HOME = 'C:\Users\agnes'
+        /* Use double backslashes for Windows paths in Groovy */
+        MINIKUBE_HOME = 'C:\\Users\\agnes'
+        KUBECONFIG = 'C:\\Users\\agnes\\.kube\\config'
     }
     stages {
         stage('Checkout') {
@@ -19,7 +20,6 @@ pipeline {
         stage('Docker Build') {
             steps {
                 echo 'Building image inside Minikube...'
-                /* We use the full path to your user home to find the cluster */
                 bat 'minikube image build -t blog-post-app:latest .'
             }
         }
