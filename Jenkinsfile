@@ -25,10 +25,11 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
                 powershell '''
-                    # Hardcoded your verified Minikube IP
+                    # Hardcoded your IP and your SPECIFIC user path for certificates
                     $env:DOCKER_TLS_VERIFY = "1"
                     $env:DOCKER_HOST = "tcp://192.168.49.2:2376"
-                    $env:DOCKER_CERT_PATH = "$HOME\\.minikube\\certs"
+                    $env:DOCKER_CERT_PATH = "C:\\Users\\agnes\\.minikube\\certs"
+                    
                     docker build -t blog-post-app:latest .
                 '''
             }
