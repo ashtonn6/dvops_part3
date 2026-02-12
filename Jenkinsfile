@@ -1,4 +1,4 @@
-pipeline {
+﻿pipeline {
     agent any
     tools {
         nodejs 'NodeJS'
@@ -24,8 +24,10 @@ pipeline {
         stage('Docker Build') {
             steps {
                 echo 'Building Docker image...'
-                bat 'minikube docker-env --shell powershell | Invoke-Expression'
-                bat 'docker build -t blog-post-app:latest .'
+                powershell '''
+                    minikube docker-env --shell powershell | Invoke-Expression
+                    docker build -t blog-post-app:latest .
+                '''
             }
         }
         stage('Deploy') {
