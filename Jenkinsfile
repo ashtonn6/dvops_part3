@@ -25,7 +25,10 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
                 powershell '''
-                    minikube docker-env --shell powershell | Invoke-Expression
+                    $MINIKUBE_IP = minikube ip
+                    $env:DOCKER_TLS_VERIFY = "1"
+                    $env:DOCKER_HOST = "tcp://$($MINIKUBE_IP.Trim()):2376"
+                    $env:DOCKER_CERT_PATH = "$HOME\\.minikube\\certs"
                     docker build -t blog-post-app:latest .
                 '''
             }
