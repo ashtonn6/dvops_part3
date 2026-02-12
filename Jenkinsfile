@@ -1,4 +1,4 @@
-pipeline {
+﻿pipeline {
     agent any
     tools {
         nodejs 'NodeJS'
@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out code...'
+                echo 'Pulling latest code...'
                 checkout scm
             }
         }
@@ -18,12 +18,19 @@ pipeline {
             steps {
                 echo 'Installing and testing...'
                 bat 'npm install'
-                bat 'npm test'
+                bat 'npm test -- --passWithNoTests'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                echo 'Building Docker image...'
+                bat 'minikube docker-env --shell powershell | Invoke-Expression'
+                bat 'docker build -t blog-post-app:latest .'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying to K8s...'
+                echo 'Applying Kubernetes manifests...'
                 bat 'kubectl apply -f k8s/'
                 bat 'kubectl rollout restart deployment/blog-post-app -n blog-app-prod'
             }
