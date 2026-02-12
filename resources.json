@@ -1,0 +1,18 @@
+{
+  "resources": [
+    {
+      "id": 1,
+      "title": "Welcome to the Blog",
+      "content": "This is your first blog post. You can delete it using the button below.",
+      "author": "Admin",
+      "date": "2026-02-13"
+    },
+    {
+      "id": 2,
+      "title": "Getting Started with DevOps",
+      "content": "DevOps is a set of practices that combines software development and IT operations.",
+      "author": "Ashton",
+      "date": "2026-02-14"
+    }
+  ]
+}
